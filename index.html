@@ -1,31 +1,29 @@
 <!doctype html>
 <html>
 <head>
-    <title>ideaBox</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  <title>ideaBox</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
-
 <body>
-    <section class="container box">
-        <article class="top-box">
-            <form>
-                <h1 class="idea">idea</h1>
-                <h1 class="box">Box</h1>
-                <input id="title-input" type="text" placeholder="Title"><br />
-                <input id="body-input" type="text" placeholder="Body"><br />  
-                <button class="save-btn">save</button><br />
-            </form>
-        </article>
-        
-        <input id="search-input" type="text" placeholder="Search">
-
-        <article class="bottom-box"> </article>
-
+  <main class="container box">
+    <section class="top-box">
+      <h1 class="idea">idea</h1>
+      <h1 class="box">Box</h1>
+      <form>
+        <input id="title-input" type="text" placeholder="Title" aria-label="Title Input"><br />
+        <input id="body-input" type="text" placeholder="Body" aria-label="Body Input"><br />  
+        <button class="save-btn">save</button><br />
+      </form>
     </section>
-
-    <script src="./jquery/jquery-3.2.1.js"></script>
-    <script src="./index.js"></script>
+    <section class="bottom-section">   
+      <input id="search-input" type="text" placeholder="Search" aria-label="Search Input"> 
+      <article class="bottom-box">      
+      </article>       
+    </section>
+  </main>
+  <script src="./jquery/jquery-3.2.1.js"></script>
+  <script src="./index.js"></script>
 </body>
