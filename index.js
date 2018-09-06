@@ -2,17 +2,9 @@
 $(".bottom-box").on('click', deleteAndChangeQuality);
 $('.save-btn').on('click', clickSave);
 
-///GLOBAL VARS
+//////CREATE NEW CARD IN HTML
 
-var title = $('#title-input').val();
-var body = $('#body-input').val();
-var numCards = 0;
-var qualityVariable = "swill";
-var localStoreCard = function(card) {
-  var cardString = JSON.stringify(card);
-  localStorage.setItem('card' + numCards  , cardString);
-}
-var newCard = function(card) {
+function newCard(card) {
     return '<div id="' + card.id + '"class="card-container"><h2 class="title-of-card">'  
             + card.title +  '</h2>'
             + '<button class="delete-button"></button>'
@@ -25,7 +17,6 @@ var newCard = function(card) {
             + '</div>';
 };
 
-
 //////SAVE FUNCTION
 
 function clickSave(event) {
@@ -33,18 +24,24 @@ function clickSave(event) {
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
     };  
-
-    numCards++;
     var card = new CreateCard($('#title-input').val(), $('#body-input').val())
     $( ".bottom-box" ).prepend(newCard(card)); 
     localStoreCard(card);
     $('form')[0].reset();
 };
 
+///////STORE CARD FUNCTION
+
+function localStoreCard(card) {
+  var cardString = JSON.stringify(card);
+  localStorage.setItem(card.id, cardString);
+}
+
 //////CREATE THE CARD OBJECT FUNCTION
 
 function CreateCard(title, body) {
-  this.id = 'card' + numCards;
+  this.numCards = $('.card-container').length;
+  this.id = 'card' + this.numCards;
   this.title = title;
   this.body = body;
   this.quality = "swill";
@@ -52,12 +49,12 @@ function CreateCard(title, body) {
 
 /////LOAD STUFF ON PAGE LOAD
 
-
-for(i = 0; i < localStorage.length; i++) {
-  var key = localStorage.key(i);
-  var cardData = JSON.parse(localStorage.getItem(key));
-  numCards ++ 
-  $( ".bottom-box" ).prepend(newCard(cardData));
+window.onload = function() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    $( ".bottom-box" ).prepend(newCard(cardData));
+  }
 }
 
 ///DELETE AND CHANGE QUALITY FUNCTION
