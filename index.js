@@ -1,8 +1,17 @@
+///EVENT LISTENERS
+$(".bottom-box").on('click', deleteAndChangeQuality);
+$('.save-btn').on('click', clickSave);
+
+///GLOBAL VARS
+
 var title = $('#title-input').val();
 var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
-
+var localStoreCard = function() {
+  var cardString = JSON.stringify(cardObject());
+  localStorage.setItem('card' + numCards  , cardString);
+}
 var newCard = function(id , title , body , quality) {
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'
@@ -16,26 +25,10 @@ var newCard = function(id , title , body , quality) {
             + '</div>';
 };
 
-function cardObject() {
-    return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: qualityVariable
-    };
-}
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
+//////SAVE FUNCTION
 
-var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
-}
-
-$('.save-btn').on('click', function(event) {
+function clickSave(event) {
     event.preventDefault();
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
@@ -45,9 +38,29 @@ $('.save-btn').on('click', function(event) {
     $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
     localStoreCard();
     $('form')[0].reset();
+};
+
+//////CREATE THE CARD OBJECT FUNCTION
+
+function cardObject() {
+  return {
+      title: $('#title-input').val(),
+      body: $('#body-input').val(),
+      quality: qualityVariable
+  };
+}
+
+/////LOAD STUFF ON PAGE LOAD
+
+$.each(localStorage, function(key) {
+  var cardData = JSON.parse(this);
+  numCards++;
+  $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
 });
 
-$(".bottom-box").on('click', function(event){
+///DELETE AND CHANGE QUALITY FUNCTION
+
+function deleteAndChangeQuality(event) {
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     var qualityVariable;
 
@@ -92,7 +105,7 @@ $(".bottom-box").on('click', function(event){
         var cardHTMLId = cardHTML[0].id;
         localStorage.removeItem(cardHTMLId);
     }
-});
+};
       
 
 
