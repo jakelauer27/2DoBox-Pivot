@@ -1,3 +1,4 @@
+
 ///EVENT LISTENERS
 $(".bottom-box").on('click', deleteAndChangeQuality);
 $('.save-btn').on('click', clickSave);
@@ -7,12 +8,12 @@ $('.save-btn').on('click', clickSave);
 function newCard(card) {
     return '<div id="' + card.id + '"class="card-container"><h2 class="title-of-card">'  
             + card.title +  '</h2>'
-            + '<button class="delete-button"></button>'
+            + '<button class="card-btn delete-button"></button>'
             +'<p class="body-of-card">'
             + card.body + '</p>'
-            + '<button class="upvote"></button>' 
-            + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + card.quality + '</span>' + '</p>'
+            + '<button class="card-btn upvote"></button>' 
+            + '<button class="card-btn downvote"></button>' 
+            + '<p class="quality">' + 'quality: ' + '<span class="qualityVariable">' + card.quality + '</span>' + '</p>'
             + '<hr>' 
             + '</div>';
 };
