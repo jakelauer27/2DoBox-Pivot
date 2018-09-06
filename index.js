@@ -2,12 +2,16 @@
 $(".bottom-box").on('click', deleteAndChangeQuality);
 $('.save-btn').on('click', clickSave);
 
+///GLOBAL VARS
 
 var title = $('#title-input').val();
 var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
-
+var localStoreCard = function() {
+  var cardString = JSON.stringify(cardObject());
+  localStorage.setItem('card' + numCards  , cardString);
+}
 var newCard = function(id , title , body , quality) {
     return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
             + title +  '</h2>'
@@ -21,24 +25,8 @@ var newCard = function(id , title , body , quality) {
             + '</div>';
 };
 
-function cardObject() {
-    return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: qualityVariable
-    };
-}
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
-
-var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
-}
+//////SAVE FUNCTION
 
 function clickSave(event) {
     event.preventDefault();
@@ -51,6 +39,26 @@ function clickSave(event) {
     localStoreCard();
     $('form')[0].reset();
 };
+
+//////CREATE THE CARD OBJECT FUNCTION
+
+function cardObject() {
+  return {
+      title: $('#title-input').val(),
+      body: $('#body-input').val(),
+      quality: qualityVariable
+  };
+}
+
+/////LOAD STUFF ON PAGE LOAD
+
+$.each(localStorage, function(key) {
+  var cardData = JSON.parse(this);
+  numCards++;
+  $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
+});
+
+///DELETE AND CHANGE QUALITY FUNCTION
 
 function deleteAndChangeQuality(event) {
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
