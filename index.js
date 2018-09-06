@@ -8,8 +8,8 @@ var title = $('#title-input').val();
 var body = $('#body-input').val();
 var numCards = 0;
 var qualityVariable = "swill";
-var localStoreCard = function() {
-  var cardString = JSON.stringify(cardObject());
+var localStoreCard = function(card) {
+  var cardString = JSON.stringify(card);
   localStorage.setItem('card' + numCards  , cardString);
 }
 var newCard = function(card) {
@@ -37,7 +37,7 @@ function clickSave(event) {
     numCards++;
     var card = new CreateCard($('#title-input').val(), $('#body-input').val())
     $( ".bottom-box" ).prepend(newCard(card)); 
-    localStoreCard();
+    localStoreCard(card);
     $('form')[0].reset();
 };
 
@@ -47,16 +47,18 @@ function CreateCard(title, body) {
   this.id = 'card' + numCards;
   this.title = title;
   this.body = body;
-  this.quality = swill;
+  this.quality = "swill";
 }
 
 /////LOAD STUFF ON PAGE LOAD
 
-$.each(localStorage, function(key) {
-  var cardData = JSON.parse(this);
-  numCards++;
-  $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
+
+for(i = 0; i < localStorage.length; i++) {
+  var key = localStorage.key(i);
+  var cardData = JSON.parse(localStorage.getItem(key));
+  numCards ++ 
+  $( ".bottom-box" ).prepend(newCard(cardData));
+}
 
 ///DELETE AND CHANGE QUALITY FUNCTION
 
