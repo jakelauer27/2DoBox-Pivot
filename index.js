@@ -12,15 +12,15 @@ var localStoreCard = function() {
   var cardString = JSON.stringify(cardObject());
   localStorage.setItem('card' + numCards  , cardString);
 }
-var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-            + title +  '</h2>'
+var newCard = function(card) {
+    return '<div id="' + card.id + '"class="card-container"><h2 class="title-of-card">'  
+            + card.title +  '</h2>'
             + '<button class="delete-button"></button>'
             +'<p class="body-of-card">'
-            + body + '</p>'
+            + card.body + '</p>'
             + '<button class="upvote"></button>' 
             + '<button class="downvote"></button>' 
-            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
+            + '<p class="quality">' + 'quality:' + '<span class="qualityVariable">' + card.quality + '</span>' + '</p>'
             + '<hr>' 
             + '</div>';
 };
@@ -35,19 +35,19 @@ function clickSave(event) {
     };  
 
     numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
+    var card = new CreateCard($('#title-input').val(), $('#body-input').val())
+    $( ".bottom-box" ).prepend(newCard(card)); 
     localStoreCard();
     $('form')[0].reset();
 };
 
 //////CREATE THE CARD OBJECT FUNCTION
 
-function cardObject() {
-  return {
-      title: $('#title-input').val(),
-      body: $('#body-input').val(),
-      quality: qualityVariable
-  };
+function CreateCard(title, body) {
+  this.id = 'card' + numCards;
+  this.title = title;
+  this.body = body;
+  this.quality = swill;
 }
 
 /////LOAD STUFF ON PAGE LOAD
