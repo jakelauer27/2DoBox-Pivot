@@ -1,55 +1,66 @@
-var title = $('#title-input').val();
-var body = $('#body-input').val();
-var numCards = 0;
-var qualityVariable = "swill";
 
-var newCard = function(id , title , body , quality) {
-    return '<div id="' + id + '"class="card-container"><h2 class="title-of-card">'  
-            + title +  '</h2>'
+///EVENT LISTENERS
+$(".bottom-box").on('click', deleteAndChangeQuality);
+$('.save-btn').on('click', clickSave);
+
+//////CREATE NEW CARD IN HTML
+
+function newCard(card) {
+    return '<div id="' + card.id + '"class="card-container"><h2 class="title-of-card">'  
+            + card.title +  '</h2>'
             + '<button class="card-btn delete-button"></button>'
             +'<p class="body-of-card">'
-            + body + '</p>'
-            + '<div class="btn-div">'
+            + card.body + '</p>'
             + '<button class="card-btn upvote"></button>' 
             + '<button class="card-btn downvote"></button>' 
-            + '<p class="quality">' + 'quality: ' + '<span class="qualityVariable">' + quality + '</span>' + '</p>'
-            + '</div>'
+            + '<p class="quality">' + 'quality: ' + '<span class="qualityVariable">' + card.quality + '</span>' + '</p>'
             + '<hr>' 
             + '</div>';
 };
 
-function cardObject() {
-    return {
-        title: $('#title-input').val(),
-        body: $('#body-input').val(),
-        quality: qualityVariable
-    };
-}
+//////SAVE FUNCTION
 
-$.each(localStorage, function(key) {
-    var cardData = JSON.parse(this);
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard(key, cardData.title, cardData.body, cardData.quality));
-});
-
-var localStoreCard = function() {
-    var cardString = JSON.stringify(cardObject());
-    localStorage.setItem('card' + numCards  , cardString);
-}
-
-$('.save-btn').on('click', function(event) {
+function clickSave(event) {
     event.preventDefault();
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
     };  
-
-    numCards++;
-    $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
-    localStoreCard();
+    var card = new CreateCard($('#title-input').val(), $('#body-input').val())
+    $( ".bottom-box" ).prepend(newCard(card)); 
+    localStoreCard(card);
     $('form')[0].reset();
-});
+};
 
-$(".bottom-box").on('click', function(event){
+///////STORE CARD FUNCTION
+
+function localStoreCard(card) {
+  var cardString = JSON.stringify(card);
+  localStorage.setItem(card.id, cardString);
+}
+
+//////CREATE THE CARD OBJECT FUNCTION
+
+function CreateCard(title, body) {
+  this.numCards = $('.card-container').length;
+  this.id = 'card' + this.numCards;
+  this.title = title;
+  this.body = body;
+  this.quality = "swill";
+}
+
+/////LOAD STUFF ON PAGE LOAD
+
+window.onload = function() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
+
+///DELETE AND CHANGE QUALITY FUNCTION
+
+function deleteAndChangeQuality(event) {
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     var qualityVariable;
 
@@ -94,7 +105,7 @@ $(".bottom-box").on('click', function(event){
         var cardHTMLId = cardHTML[0].id;
         localStorage.removeItem(cardHTMLId);
     }
-});
+};
       
 
 
