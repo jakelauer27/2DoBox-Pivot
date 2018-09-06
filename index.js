@@ -1,3 +1,8 @@
+///EVENT LISTENERS
+$(".bottom-box").on('click', deleteAndChangeQuality);
+$('.save-btn').on('click', clickSave);
+
+
 var title = $('#title-input').val();
 var body = $('#body-input').val();
 var numCards = 0;
@@ -35,7 +40,7 @@ var localStoreCard = function() {
     localStorage.setItem('card' + numCards  , cardString);
 }
 
-$('.save-btn').on('click', function(event) {
+function clickSave(event) {
     event.preventDefault();
     if ($('#title-input').val() === "" || $('#body-input').val() === "") {
        return false;
@@ -45,9 +50,9 @@ $('.save-btn').on('click', function(event) {
     $( ".bottom-box" ).prepend(newCard('card' + numCards, $('#title-input').val(), $('#body-input').val(), qualityVariable)); 
     localStoreCard();
     $('form')[0].reset();
-});
+};
 
-$(".bottom-box").on('click', function(event){
+function deleteAndChangeQuality(event) {
     var currentQuality = $($(event.target).siblings('p.quality').children()[0]).text().trim();
     var qualityVariable;
 
@@ -92,7 +97,7 @@ $(".bottom-box").on('click', function(event){
         var cardHTMLId = cardHTML[0].id;
         localStorage.removeItem(cardHTMLId);
     }
-});
+};
       
 
 

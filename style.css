@@ -14,10 +14,10 @@ body {
 }
 
 .top-box {
-    background-color: #e5f3f2;
-    box-sizing: border-box;
     height: 300px;
     margin: 0;
+    background-color: #e5f3f2;
+    box-sizing: border-box;
     text-align: center;
 }
 
