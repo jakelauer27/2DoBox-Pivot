@@ -112,8 +112,8 @@ function changeQuality(e) {
 
 function search(e) {
   var value = $(e.target).val().toLowerCase();
-  var article = $('.card-container');
-  article.each(function(i, card){
+  var cards = $('.card-container');
+  cards.each(function(i, card){
     $(card).toggle($(card).text().toLowerCase().indexOf(value) !== -1)
   })
 }
