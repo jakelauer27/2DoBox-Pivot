@@ -2,6 +2,7 @@
 
 $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
+$('#search-input').on('keyup', search);
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -106,11 +107,16 @@ function changeQuality(e) {
     localStorage.setItem(cardHTMLId, newCardJSON);
     }
 };
-      
 
+/*SEARCH FUNCTION*/
 
-
-
+function search(e) {
+  var value = $(e.target).val().toLowerCase();
+  var cards = $('.card-container');
+  cards.each(function(i, card){
+    $(card).toggle($(card).text().toLowerCase().indexOf(value) !== -1)
+  })
+}
 
 
 
