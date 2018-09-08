@@ -10,17 +10,23 @@
 <body>
   <main class="container box">
     <section class="top-box">
-      <h1 class="idea">idea</h1>
-      <h1 class="box">Box</h1>
-      <form>
-        <input id="title-input" type="text" placeholder="Title" aria-label="Title Input"><br />
-        <input id="body-input" type="text" placeholder="Body" aria-label="Body Input"><br />  
-        <button class="save-btn">save</button><br />
-      </form>
+      <article class="form-box">
+        <header>
+          <h1 class="idea">idea</h1>
+          <h1 class="box">Box</h1>
+        </header>
+        <form>
+          <input id="title-input" type="text" placeholder="Title" aria-label="Title Input"><br />
+          <input id="body-input" type="text" placeholder="Body" aria-label="Body Input"><br />  
+          <input type="button" class="save-btn" value="save"><br />
+        </form>
+      </article>
     </section>
     <section class="bottom-section">   
-      <input id="search-input" type="text" placeholder="Search" aria-label="Search Input"> 
-      <article class="bottom-box">      
+      <div class="search-input-container">
+        <input id="search-input" type="text" placeholder="Search" aria-label="Search Input"> 
+      </div>
+        <article class="bottom-box">      
       </article>       
     </section>
   </main>
