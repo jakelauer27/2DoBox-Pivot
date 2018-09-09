@@ -213,7 +213,8 @@ hr {
   color: rgb(218, 229, 238)
 }
 
-.filter-btn {
+
+.filter-btn, .show-all-btn {
   width: 10%;
   height: 30px;
 }
@@ -224,12 +225,10 @@ hr {
 }
 
 .filter-div {
-  align-items: center;
-  display: flex;
+  margin: 0 auto;
   justify-content: space-between;
   width: 45%;
-  margin: -10px auto 10px;
-}
+  display: flex;
 
 .show-all-btn {
   background-color: rgb(218, 229, 238);
