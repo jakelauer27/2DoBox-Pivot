@@ -5,6 +5,7 @@ $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $('.bottom-box').on("focusout", updateCardText);
 $('.show-completed-button').on("click", showAllCompleted)
+$('.show-more-todos-button').on("click", showMoreTodos)
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -125,10 +126,24 @@ function search(e) {
   })
 }
 
+////SHOW ALL FUNCTION 
+
+function showMoreTodos() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (!cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
+
 /////LOAD STUFF ON PAGE LOAD
 
 window.onload = function() {
-  for(i = 0; i < localStorage.length; i++) {
+  var num = 0;
+  if(localStorage.length > 9) {
+    num = localStorage.length - 10;
+  }
+  for(i = num; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
     if (!cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
