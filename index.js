@@ -4,10 +4,14 @@ $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $('.bottom-box').on("focusout", updateCardText);
+$(document).on("keypress", updateCardTextOnEnter);
+$('.show-completed-button').on("click", showAllCompleted);
+$('#title-input').on('keyup', countTitle);
+$('#task-input').on('keyup', countBody);
 $('.filter-importance-div').on('click', filterByImportance);
 $('.show-all-btn').on('click', showAllCards)
-$('.show-completed-button').on("click", showAllCompleted)
 $('.show-more-todos-button').on("click", showMoreTodos)
+
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -32,7 +36,7 @@ function CreateCard(title, task) {
 }
 
 function newCard(card) {
-  return `<div id="${card.id}" class="card-container ${card.completed}"><h2 class="title-of-card" content-editable>${card.title}</h2>
+  return `<div id="${card.id}" class="card-container ${card.completed}"><h2 class="title-of-card" contenteditable>${card.title}</h2>
           <button class="card-btn delete-button"></button>
           <p class="body-of-card" contenteditable>${card.task}</p>
           <button class="card-btn upvote"></button> 
@@ -126,6 +130,27 @@ function search(e) {
     )
   })
 }
+
+/////COUNTER FUNCTIONS
+
+function countTitle() {
+  var count = $('#title-input').val().length;
+  $('.character-count-title').text(count);
+  if (count > 60) {
+    $('.character-count-title').addClass("red");
+    
+  } else if (count < 60 &&  $('.character-count-title').hasClass('red')) {
+    $('.character-count-title').removeClass("red");
+  }
+}
+
+function countBody() {
+  var count = $('#task-input').val().length;
+  $('.character-count-task').text(count);
+  if (count > 120) {
+    $('.character-count-task').addClass("red");
+  } else if (count < 120 &&  $('.character-count-task').hasClass('red')) {
+    $('.character-count-task').removeClass("red");
 
 ////SHOW ALL FUNCTION 
 
