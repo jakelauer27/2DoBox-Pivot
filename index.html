@@ -17,15 +17,17 @@
         </header>
         <form>
           <input id="title-input" type="text" placeholder="Title" aria-label="Title Input"><br />
+          <p class=counter>Characters: <span class="character-count-title"> 0 </span> / 60</p>
           <input id="task-input" type="text" placeholder="Task" aria-label="Task Input"><br />  
+          <p class=counter>Characters: <span class="character-count-task"> 0 </span> / 120</p>
           <input type="button" class="save-btn" value="save"><br />
         </form>
       </article>
     </section>
     <section class="bottom-section">   
       <div class="search-input-container">
-        <button class="show-completed-button">Show completed TODOs</button>
         <input id="search-input" type="text" placeholder="Filter" aria-label="Filter Input"> 
+        <button class="show-completed-button">Show completed TODOs</button>
       </div>
         <article class="bottom-box">      
       </article>       
