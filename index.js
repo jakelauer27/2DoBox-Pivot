@@ -118,7 +118,9 @@ function search(e) {
   var value = $(e.target).val().toLowerCase();
   var cards = $('.card-container');
   cards.each(function(i, card){
-    $(card).toggle($(card).text().toLowerCase().indexOf(value) !== -1)
+    $(card).toggle($(card).find('.title-of-card').text().toLowerCase().indexOf(value) !== -1 
+    || $(card).find('.body-of-card').text().toLowerCase().indexOf(value) !== -1
+    )
   })
 }
 
