@@ -5,7 +5,7 @@ $('#task-input').on('keyup', countBody);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $('.show-completed-button').on('click', showAllCompleted);
-$('.filter-importance-div').on('click', filterByImportance);
+$('.filter-div').on('click', filterByImportance);
 $('.show-all-btn').on('click', showAllCards);
 $('.bottom-box').on('focusout', updateCardText);
 $('.bottom-box').on('click', articleButtonDelegator);
@@ -135,6 +135,7 @@ function showMoreTodos() {
 }
 
 function filterByImportance(e) {
+  if ($(e.target).hasClass("show-all-btn")) return;
   var value = $(e.target).text().toLowerCase();
   var cards = $('.card-container');
   cards.each(function(i, card){
@@ -142,12 +143,13 @@ function filterByImportance(e) {
   })
 }
 
-function showAllCards(e) {
+function showAllCards() {
   var cards = $('.card-container');
   cards.each(function(i, card){
     $(card).toggle(true)
   })
 }
+
 /////COUNTER FUNCTIONS
 
 function countTitle() {
@@ -156,7 +158,7 @@ function countTitle() {
   if (count > 60) {
     $('.character-count-title').addClass("red");
     $('.save-btn').attr("disabled", "disabled");
-  } else if (count < 60 &&  $('.character-count-title').hasClass('red')) {
+  } else if (count < 60 && $('.character-count-title').hasClass('red')) {
     $('.character-count-title').removeClass("red");
     $('.save-btn').removeAttr("disabled");
   }

@@ -1,3 +1,10 @@
+/* #EEEEFF - light-purple
+#7F7CAF - lavander
+rgb(218, 229, 238) - light blue 
+#28587B - darker blue
+#9FB798 - green */
+
+
 /*GENERAL*/
 
 body {
@@ -13,7 +20,7 @@ button:focus {
 /*TOP SECTION*/
 
 .top-box {
-  background-color: #e5f3f2;
+  background-color: rgb(218, 229, 238);
 }
 
 header {
@@ -24,13 +31,13 @@ header {
 }
 
 h1{
-  color: #6d6e71;
+  color: #8e9096;
   font-size: 275%;
   margin-bottom:  30px;
 }
 
 .idea {
-  color: #00a79d;
+  color: #28587B;
 }
 
 form {
@@ -45,11 +52,12 @@ input {
   height: 30px;
   font-family: 'Open Sans', sans-serif;
   font-size: 100%;
+  padding: 2px 5px;
 }
 
 .save-btn,
 .show-more-todos-button {
-  background-color: #00a79d;
+  background-color: #28587B;
   border: none;
   color: #fff;
   display: block;
@@ -61,7 +69,12 @@ input {
 .show-more-todos-button:hover,
 .filter-btn:hover,
 .show-completed-button:hover {
-  background-color: #045e55;
+  background-color: #9FB798;
+}
+
+.save-btn:disabled,
+.show-completed-button:disabled {
+  opacity: .7;
 }
 
 .counter {
@@ -81,7 +94,7 @@ input {
 /*CARD SECTION*/
 
 .show-completed-button {
-  background: #00a79d;
+  background: #28587B;
   border: 0;
   color: white;
 }
@@ -137,8 +150,9 @@ hr {
 }
 
 .completed-button {
-  background-color: #e5f3f2;
-  border-color:  #00a79d;
+  background-color: rgb(218, 229, 238);
+  border-color:  #28587B;
+  border-radius: 3px;
   color: #6d6e71;
   float: right;
   position: relative;
@@ -146,9 +160,9 @@ hr {
 }
 
 .completed-button:hover {
-  background-color: #00a79d;
-  border-color: #e5f3f2;
-  color: #e5f3f2
+  background-color: #28587B;
+  border-color: rgb(218, 229, 238);
+  color: rgb(218, 229, 238)
 }
 
 /* .show-more-todos-button {
@@ -194,15 +208,9 @@ hr {
 }
 
 .completed .completed-button, .filter-btn {
-  background-color: #00a79d;
-  border-color: #e5f3f2;
-  color: #e5f3f2
-}
-
-.filter-importance-div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  background-color: #28587B;
+  border-color: rgb(218, 229, 238);
+  color: rgb(218, 229, 238)
 }
 
 .filter-btn {
@@ -212,14 +220,21 @@ hr {
 
 .filter-p {
   font-weight: 400;
-}
-.filter-div {
-  /*width: 45%;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: #6d6e71;
 }
 
+.filter-div {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 45%;
+  margin: -10px auto 10px;
+}
+
+.show-all-btn {
+  background-color: rgb(218, 229, 238);
+  color: #6d6e71;
+}
 
 @media(max-width: 640px){
   form,
