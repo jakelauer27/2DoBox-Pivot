@@ -70,9 +70,14 @@ function deleteCard(e) {
 function changeQuality(e, num) {
   var card = JSON.parse(localStorage.getItem(e.target.parentNode.id));
   card.qualityIndex += num;
+  if (card.qualityIndex > 2) {
+    card.qualityIndex = 2;
+  } else if (card.qualityIndex < 0) {
+    card.qualityIndex = 0;
+  }
   ($(e.target).siblings('.quality').children().text(card.qualitiesArray[card.qualityIndex]));;
   localStoreCard(card);
-};
+}
 
 /*SEARCH FUNCTION*/
 
