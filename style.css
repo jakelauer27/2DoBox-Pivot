@@ -59,8 +59,9 @@ input {
 }
 
 .save-btn:hover,
-.show-completed-button:hover,
-.show-more-todos-button:hover {
+.show-more-todos-button:hover,
+.filter-btn:hover,
+.show-completed-button:hover {
   background-color: #045e55;
 }
 
@@ -179,11 +180,33 @@ hr {
   text-decoration: line-through;
 }
 
-.completed .completed-button {
+.completed .completed-button, .filter-btn {
   background-color: #00a79d;
   border-color: #e5f3f2;
   color: #e5f3f2
 }
+
+.filter-importance-div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.filter-btn {
+  width: 10%;
+  height: 30px;
+}
+
+.filter-p {
+  font-weight: 400;
+}
+.filter-div {
+  /*width: 45%;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 
 @media(max-width: 640px){
   form,

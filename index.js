@@ -4,6 +4,8 @@ $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $('.bottom-box').on("focusout", updateCardText);
+$('.filter-importance-div').on('click', filterByImportance);
+$('.show-all-btn').on('click', showAllCards)
 $('.show-completed-button').on("click", showAllCompleted)
 $('.show-more-todos-button').on("click", showMoreTodos)
 
@@ -35,7 +37,7 @@ function newCard(card) {
           <p class="body-of-card" contenteditable>${card.task}</p>
           <button class="card-btn upvote"></button> 
           <button class="card-btn downvote"></button> 
-          <p class="importance">importance: <span class="importanceVariable">${card.importanceArray[card.importanceIndex]}</span></p>
+          <p class="importance">importance: <span class="importance-variable">${card.importanceArray[card.importanceIndex]}</span></p>
           <button class="completed-button" aria-label="completed button">Completed</button>
           <hr>
           </div>`;
@@ -64,12 +66,9 @@ function deleteCard(e) {
 function changeImportance(e, num) {
   var card = JSON.parse(localStorage.getItem($(e.target).parent().attr("id")));
   card.importanceIndex += num;
-  if (card.importanceIndex > 4) {
-    card.importanceIndex = 4;
-  } else if (card.importanceIndex < 0) {
-    card.importanceIndex = 0;
-  }
-  ($(e.target).siblings('.importance').children().text(card.importanceArray[card.importanceIndex]));;
+  if (card.importanceIndex > 4) card.importanceIndex = 4;
+  if (card.importanceIndex < 0) card.importanceIndex = 0;
+  ($(e.target).siblings('.importance').children().text(card.importanceArray[card.importanceIndex]));
   localStoreCard(card);
 }
 
@@ -152,7 +151,22 @@ window.onload = function() {
   }
 }
 
+////FILTER CARDS BY IMPORTANCE
 
+function filterByImportance(e) {
+  var value = $(e.target).text().toLowerCase();
+  var cards = $('.card-container');
+  cards.each(function(i, card){
+    $(card).toggle($(card).find('.importance-variable').text().toLowerCase().indexOf(value) !== -1 )
+  })
+}
+
+function showAllCards(e) {
+  var cards = $('.card-container');
+  cards.each(function(i, card){
+    $(card).toggle(true)
+  })
+}
 
 
 
