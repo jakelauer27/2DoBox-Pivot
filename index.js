@@ -5,7 +5,7 @@ $('#task-input').on('keyup', countBody);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $('.show-completed-button').on('click', showAllCompleted);
-$('.filter-importance-div').on('click', filterByImportance);
+$('.filter-btn').on('click', filterByImportance);
 $('.show-all-btn').on('click', showAllCards);
 $('.bottom-box').on('focusout', updateCardText);
 $('.bottom-box').on('click', articleButtonDelegator);
