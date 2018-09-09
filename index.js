@@ -23,8 +23,8 @@ function CreateCard(title, task) {
   this.id = Date.now();
   this.title = title;
   this.task = task;
-  this.qualitiesArray = ['swill', 'plausible', 'genius']
-  this.qualityIndex = 0;
+  this.importanceArray = ['none', 'low', 'normal', 'high', 'critical']
+  this.importanceIndex = 2;
   this.completed = "";
 }
 
@@ -34,7 +34,7 @@ function newCard(card) {
           <p class="body-of-card" contenteditable>${card.task}</p>
           <button class="card-btn upvote"></button> 
           <button class="card-btn downvote"></button> 
-          <p class="quality">quality:<span class="qualityVariable">${card.qualitiesArray[card.qualityIndex]}</span></p>
+          <p class="importance">importance: <span class="importanceVariable">${card.importanceArray[card.importanceIndex]}</span></p>
           <button class="completed-button" aria-label="completed button">Completed</button>
           <hr>
           </div>`;
@@ -45,12 +45,12 @@ function localStoreCard(card) {
   localStorage.setItem(card.id, cardString);
 }
 
-///DELETE AND CHANGE QUALITY FUNCTIONS
+///DELETE AND CHANGE IMPORTANCE FUNCTIONS
 
 function articleButtonDelegator(e) {
   if ($(e.target).hasClass('delete-button')) deleteCard(e);
-  if ($(e.target).hasClass('upvote')) changeQuality(e, 1);
-  if ($(e.target).hasClass('downvote')) changeQuality(e, -1);
+  if ($(e.target).hasClass('upvote')) changeImportance(e, 1);
+  if ($(e.target).hasClass('downvote')) changeImportance(e, -1);
   if ($(e.target).hasClass('completed-button')) completeTask(e);
 }
 
@@ -60,15 +60,15 @@ function deleteCard(e) {
   localStorage.removeItem(cardHTMLId);
 }
 
-function changeQuality(e, num) {
+function changeImportance(e, num) {
   var card = JSON.parse(localStorage.getItem($(e.target).parent().attr("id")));
-  card.qualityIndex += num;
-  if (card.qualityIndex > 2) {
-    card.qualityIndex = 2;
-  } else if (card.qualityIndex < 0) {
-    card.qualityIndex = 0;
+  card.importanceIndex += num;
+  if (card.importanceIndex > 4) {
+    card.importanceIndex = 4;
+  } else if (card.importanceIndex < 0) {
+    card.importanceIndex = 0;
   }
-  ($(e.target).siblings('.quality').children().text(card.qualitiesArray[card.qualityIndex]));;
+  ($(e.target).siblings('.importance').children().text(card.importanceArray[card.importanceIndex]));;
   localStoreCard(card);
 }
 
