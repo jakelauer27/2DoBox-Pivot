@@ -109,8 +109,10 @@ function showAllCompleted() {
   for(i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
-    if (cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
-  }
+    if (cardData.completed) {
+      $( ".bottom-box" ).prepend(newCard(cardData));
+      }
+    }
   $('.show-completed-button').attr("disabled", "disabled");
 }
 
