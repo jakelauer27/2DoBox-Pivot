@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 <head>
-  <title>ideaBox</title>
+  <title>TODOBox</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="style.css">
-  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,700" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 </head>
 <body>
@@ -12,8 +12,8 @@
     <section class="top-box">
       <article class="form-box">
         <header>
-          <h1 class="idea">idea</h1>
-          <h1 class="box">Box</h1>
+          <h1 class="idea">ToDo</h1>
+          <h1 class="box">box</h1>
         </header>
         <form>
           <input id="title-input" type="text" placeholder="Title" aria-label="Title Input"><br />
@@ -25,11 +25,25 @@
       </article>
     </section>
     <section class="bottom-section">   
-      <div class="search-input-container">
+      <div class="bottom-input-container">
         <input id="search-input" type="text" placeholder="Filter" aria-label="Filter Input"> 
-        <button class="show-completed-button">Show completed TODOs</button>
+        <button class="show-completed-button" aria-label="Show Completed Todos Button">Show completed ToDos</button>
       </div>
-        <article class="bottom-box">      
+      <div class="filter-div">
+        <div class="filter-importance-div">
+          <p class="filter-p">Filter by importance: </p>
+          <button class="filter-btn filter-none">None</button>
+          <button class="filter-btn filter-low">Low</button>
+          <button class="filter-btn filter-normal">Normal</button>
+          <button class="filter-btn filter-high">High</button>
+          <button class="filter-btn filter-critical">Critical</button>
+        </div>
+        <button class="filter-btn show-all-btn">Show All</button>
+      </div>
+        <article class="bottom-box">    
+        <div class="bottom-input-container">
+          <input type="button" class="show-more-todos-button" aria-label="show more todos button" value="Show More ToDos"></button>
+        </div>
       </article>       
     </section>
   </main>

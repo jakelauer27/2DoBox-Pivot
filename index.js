@@ -8,6 +8,10 @@ $(document).on("keypress", updateCardTextOnEnter);
 $('.show-completed-button').on("click", showAllCompleted);
 $('#title-input').on('keyup', countTitle);
 $('#task-input').on('keyup', countBody);
+$('.filter-importance-div').on('click', filterByImportance);
+$('.show-all-btn').on('click', showAllCards)
+$('.show-more-todos-button').on("click", showMoreTodos)
+
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -26,8 +30,8 @@ function CreateCard(title, task) {
   this.id = Date.now();
   this.title = title;
   this.task = task;
-  this.qualitiesArray = ['swill', 'plausible', 'genius']
-  this.qualityIndex = 0;
+  this.importanceArray = ['none', 'low', 'normal', 'high', 'critical']
+  this.importanceIndex = 2;
   this.completed = "";
 }
 
@@ -37,7 +41,7 @@ function newCard(card) {
           <p class="body-of-card" contenteditable>${card.task}</p>
           <button class="card-btn upvote"></button> 
           <button class="card-btn downvote"></button> 
-          <p class="quality">quality:<span class="qualityVariable">${card.qualitiesArray[card.qualityIndex]}</span></p>
+          <p class="importance">importance: <span class="importance-variable">${card.importanceArray[card.importanceIndex]}</span></p>
           <button class="completed-button" aria-label="completed button">Completed</button>
           <hr>
           </div>`;
@@ -48,12 +52,12 @@ function localStoreCard(card) {
   localStorage.setItem(card.id, cardString);
 }
 
-///DELETE AND CHANGE QUALITY FUNCTIONS
+///DELETE AND CHANGE IMPORTANCE FUNCTIONS
 
 function articleButtonDelegator(e) {
   if ($(e.target).hasClass('delete-button')) deleteCard(e);
-  if ($(e.target).hasClass('upvote')) changeQuality(e, 1);
-  if ($(e.target).hasClass('downvote')) changeQuality(e, -1);
+  if ($(e.target).hasClass('upvote')) changeImportance(e, 1);
+  if ($(e.target).hasClass('downvote')) changeImportance(e, -1);
   if ($(e.target).hasClass('completed-button')) completeTask(e);
 }
 
@@ -63,15 +67,12 @@ function deleteCard(e) {
   localStorage.removeItem(cardHTMLId);
 }
 
-function changeQuality(e, num) {
+function changeImportance(e, num) {
   var card = JSON.parse(localStorage.getItem($(e.target).parent().attr("id")));
-  card.qualityIndex += num;
-  if (card.qualityIndex > 2) {
-    card.qualityIndex = 2;
-  } else if (card.qualityIndex < 0) {
-    card.qualityIndex = 0;
-  }
-  ($(e.target).siblings('.quality').children().text(card.qualitiesArray[card.qualityIndex]));;
+  card.importanceIndex += num;
+  if (card.importanceIndex > 4) card.importanceIndex = 4;
+  if (card.importanceIndex < 0) card.importanceIndex = 0;
+  ($(e.target).siblings('.importance').children().text(card.importanceArray[card.importanceIndex]));
   localStoreCard(card);
 }
 
@@ -111,8 +112,11 @@ function showAllCompleted() {
   for(i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
-    if (cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
-  }
+    if (cardData.completed) {
+      $( ".bottom-box" ).prepend(newCard(cardData));
+      }
+    }
+  $('.show-completed-button').attr("disabled", "disabled");
 }
 
 ///////////SEARCH FUNCTION
@@ -147,12 +151,10 @@ function countBody() {
     $('.character-count-task').addClass("red");
   } else if (count < 120 &&  $('.character-count-task').hasClass('red')) {
     $('.character-count-task').removeClass("red");
-  }
-}
 
-/////LOAD STUFF ON PAGE LOAD
+////SHOW ALL FUNCTION 
 
-window.onload = function() {
+function showMoreTodos() {
   for(i = 0; i < localStorage.length; i++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
@@ -160,7 +162,36 @@ window.onload = function() {
   }
 }
 
+/////LOAD STUFF ON PAGE LOAD
 
+window.onload = function() {
+  var num = 0;
+  if(localStorage.length > 9) {
+    num = localStorage.length - 10;
+  }
+  for(i = num; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (!cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
+
+////FILTER CARDS BY IMPORTANCE
+
+function filterByImportance(e) {
+  var value = $(e.target).text().toLowerCase();
+  var cards = $('.card-container');
+  cards.each(function(i, card){
+    $(card).toggle($(card).find('.importance-variable').text().toLowerCase().indexOf(value) !== -1 )
+  })
+}
+
+function showAllCards(e) {
+  var cards = $('.card-container');
+  cards.each(function(i, card){
+    $(card).toggle(true)
+  })
+}
 
 
 
