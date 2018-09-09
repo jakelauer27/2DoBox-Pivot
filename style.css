@@ -137,6 +137,15 @@ hr {
   background-image: url(./images/delete-hover.svg);
 }
 
+.completed {
+  opacity: .7;
+  text-decoration: line-through;
+}
+
+.completed h2 {
+  text-decoration: line-through;
+}
+
 @media(max-width: 640px){
   form,
   .search-input-container,  
