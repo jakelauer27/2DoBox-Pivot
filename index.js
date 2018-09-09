@@ -3,8 +3,8 @@
 $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
-$(document).on("keypress", updateCardTextOnEnter);
 $('.bottom-section').on("focusout", updateCardText);
+$('.show-completed-button').on("click", showAllCompleted)
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -25,34 +25,24 @@ function CreateCard(title, task) {
   this.task = task;
   this.qualitiesArray = ['swill', 'plausible', 'genius']
   this.qualityIndex = 0;
+  this.completed = "";
 }
 
 function newCard(card) {
-  return '<div id="' + card.id + '"class="card-container"><h2 class="title-of-card" contenteditable>'  
-          + card.title +  '</h2>'
-          + '<button class="card-btn delete-button"></button>'
-          +'<p class="body-of-card" contenteditable>'
-          + card.task + '</p>'
-          + '<button class="card-btn upvote"></button>' 
-          + '<button class="card-btn downvote"></button>' 
-          + '<p class="quality">' + 'quality: ' + '<span class="qualityVariable">' + card.qualitiesArray[card.qualityIndex] + '</span>' + '</p>'
-          + '<hr>' 
-          + '</div>';
+  return `<div id="${card.id}" class="card-container ${card.completed}"><h2 class="title-of-card" content-editable>${card.title}</h2>
+          <button class="card-btn delete-button"></button>
+          <p class="body-of-card" contenteditable>${card.task}</p>
+          <button class="card-btn upvote"></button> 
+          <button class="card-btn downvote"></button> 
+          <p class="quality">quality:<span class="qualityVariable">${card.qualitiesArray[card.qualityIndex]}</span></p>
+          <button class="completed-button" aria-label="completed button">Completed</button>
+          <hr>
+          </div>`;
 };
 
 function localStoreCard(card) {
   var cardString = JSON.stringify(card);
   localStorage.setItem(card.id, cardString);
-}
-
-/////LOAD STUFF ON PAGE LOAD
-
-window.onload = function() {
-  for(i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var cardData = JSON.parse(localStorage.getItem(key));
-    $( ".bottom-box" ).prepend(newCard(cardData));
-  }
 }
 
 ///DELETE AND CHANGE QUALITY FUNCTIONS
@@ -61,6 +51,7 @@ function articleButtonDelegator(e) {
   if ($(e.target).hasClass('delete-button')) deleteCard(e);
   if ($(e.target).hasClass('upvote')) changeQuality(e, 1);
   if ($(e.target).hasClass('downvote')) changeQuality(e, -1);
+  if ($(e.target).hasClass('completed-button')) completeTask(e);
 }
 
 function deleteCard(e) {
@@ -70,7 +61,7 @@ function deleteCard(e) {
 }
 
 function changeQuality(e, num) {
-  var card = JSON.parse(localStorage.getItem(e.target.parentNode.id));
+  var card = JSON.parse(localStorage.getItem($(e.target).parent().attr("id")));
   card.qualityIndex += num;
   if (card.qualityIndex > 2) {
     card.qualityIndex = 2;
@@ -100,6 +91,27 @@ function updateCardText(e) {
   localStoreCard(card);
 };
 
+/////////COMPLETE TASK FUNCTION 
+
+function completeTask(e) {
+  var card = JSON.parse(localStorage.getItem($(e.target).parent().attr("id")));
+  if(card.completed) {
+    card.completed = "";
+  } else {
+    card.completed = "completed";
+  };
+  localStoreCard(card)
+  $(e.target).parent().toggleClass('completed')
+}
+
+function showAllCompleted() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
+
 ///////////SEARCH FUNCTION
 
 function search(e) {
@@ -112,6 +124,15 @@ function search(e) {
   })
 }
 
+/////LOAD STUFF ON PAGE LOAD
+
+window.onload = function() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (!cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
 
 
 

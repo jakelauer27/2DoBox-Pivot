@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+button:focus {
+  outline:0;
+}
+
 /*TOP SECTION*/
 
 .top-box {
@@ -52,11 +56,18 @@ input {
   font-size: 120%;
 }
 
-.save-btn:hover {
+.save-btn:hover,
+.show-completed-button:hover {
   background-color: #045e55;
 }
 
 /*CARD SECTION*/
+
+.show-completed-button {
+  background: #00a79d;
+  border: 0;
+  color: white;
+}
 
 .search-input-container {
   width: 45%;
@@ -108,6 +119,21 @@ hr {
   width: 25px;
 }
 
+.completed-button {
+  background-color: #e5f3f2;
+  border-color:  #00a79d;
+  color: #6d6e71;
+  float: right;
+  position: relative;
+  top: 17px;
+}
+
+.completed-button:hover {
+  background-color: #00a79d;
+  border-color: #e5f3f2;
+  color: #e5f3f2
+}
+
 .upvote {
   background-image: url(./images/upvote.svg);
 }
@@ -135,6 +161,21 @@ hr {
 
 .delete-button:hover {
   background-image: url(./images/delete-hover.svg);
+}
+
+.completed {
+  opacity: .5;
+}
+
+.completed h2,
+.completed p {
+  text-decoration: line-through;
+}
+
+.completed .completed-button {
+  background-color: #00a79d;
+  border-color: #e5f3f2;
+  color: #e5f3f2
 }
 
 @media(max-width: 640px){
