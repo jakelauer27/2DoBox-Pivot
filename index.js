@@ -3,6 +3,8 @@
 $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
+$(document).on("keypress", updateCardTextOnEnter);
+$('bottom-section').on("focusout", updateCardText);
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -79,7 +81,20 @@ function changeQuality(e, num) {
   localStoreCard(card);
 }
 
-/*SEARCH FUNCTION*/
+//CHANGE IDEA TEXT FUNCTIONS 
+
+function updateCardTextOnEnter(e) {
+  if(e.which == 13) {
+    $('p, h2').blur();
+		updateCardText(e);
+  }
+}
+
+function updateCardText(e) {
+
+}
+
+///////////SEARCH FUNCTION
 
 function search(e) {
   var value = $(e.target).val().toLowerCase();
