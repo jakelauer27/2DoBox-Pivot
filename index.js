@@ -3,7 +3,7 @@
 $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
-$('.bottom-section').on("focusout", updateCardText);
+$('.bottom-box').on("focusout", updateCardText);
 $('.show-completed-button').on("click", showAllCompleted)
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
@@ -110,6 +110,7 @@ function showAllCompleted() {
     var cardData = JSON.parse(localStorage.getItem(key));
     if (cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
   }
+  $('.show-completed-button').attr("disabled", "disabled");
 }
 
 ///////////SEARCH FUNCTION
