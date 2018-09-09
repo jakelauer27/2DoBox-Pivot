@@ -8,19 +8,19 @@ $('#search-input').on('keyup', search);
 
 function clickSave(event) {
     event.preventDefault();
-    if ($('#title-input').val() === "" || $('#body-input').val() === "") {
+    if ($('#title-input').val() === "" || $('#task-input').val() === "") {
        return false;
     };  
-    var card = new CreateCard($('#title-input').val(), $('#body-input').val())
+    var card = new CreateCard($('#title-input').val(), $('#task-input').val())
     $( ".bottom-box" ).prepend(newCard(card)); 
     localStoreCard(card);
     $('form')[0].reset();
 };
 
-function CreateCard(title, body) {
+function CreateCard(title, task) {
   this.id = Date.now();
   this.title = title;
-  this.body = body;
+  this.task = task;
   this.qualitiesArray = ['swill', 'plausible', 'genius']
   this.qualityIndex = 0;
 }
@@ -30,7 +30,7 @@ function newCard(card) {
           + card.title +  '</h2>'
           + '<button class="card-btn delete-button"></button>'
           +'<p class="body-of-card">'
-          + card.body + '</p>'
+          + card.task + '</p>'
           + '<button class="card-btn upvote"></button>' 
           + '<button class="card-btn downvote"></button>' 
           + '<p class="quality">' + 'quality: ' + '<span class="qualityVariable">' + card.qualitiesArray[card.qualityIndex] + '</span>' + '</p>'
