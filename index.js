@@ -4,7 +4,8 @@ $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
 $(document).on("keypress", updateCardTextOnEnter);
-$('bottom-section').on("focusout", updateCardText);
+$('.3bottom-section').on("focusout", updateCardText);
+$('.show-completed-button').on("click", showAllCompleted)
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
 
@@ -43,16 +44,6 @@ function newCard(card) {
 function localStoreCard(card) {
   var cardString = JSON.stringify(card);
   localStorage.setItem(card.id, cardString);
-}
-
-/////LOAD STUFF ON PAGE LOAD
-
-window.onload = function() {
-  for(i = 0; i < localStorage.length; i++) {
-    var key = localStorage.key(i);
-    var cardData = JSON.parse(localStorage.getItem(key));
-    $( ".bottom-box" ).prepend(newCard(cardData));
-  }
 }
 
 ///DELETE AND CHANGE QUALITY FUNCTIONS
@@ -108,6 +99,14 @@ function completeTask(e) {
   $(e.target).parent().toggleClass('completed')
 }
 
+function showAllCompleted() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
+
 ///////////SEARCH FUNCTION
 
 function search(e) {
@@ -118,6 +117,15 @@ function search(e) {
   })
 }
 
+/////LOAD STUFF ON PAGE LOAD
+
+window.onload = function() {
+  for(i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+    var cardData = JSON.parse(localStorage.getItem(key));
+    if (!cardData.completed) $( ".bottom-box" ).prepend(newCard(cardData));
+  }
+}
 
 
 
