@@ -3,8 +3,7 @@
 $(".bottom-box").on('click', articleButtonDelegator);
 $('.save-btn').on('click', clickSave);
 $('#search-input').on('keyup', search);
-$(document).on("keypress", updateCardTextOnEnter);
-$('.3bottom-section').on("focusout", updateCardText);
+$('.bottom-section').on("focusout", updateCardText);
 $('.show-completed-button').on("click", showAllCompleted)
 
 //////SAVING -> ADDING HTML CAR -> SAVING TO LOCAL STORAGE
@@ -30,9 +29,9 @@ function CreateCard(title, task) {
 }
 
 function newCard(card) {
-  return `<div id="${card.id}" class="card-container ${card.completed}"><h2 class="title-of-card">${card.title}</h2>
+  return `<div id="${card.id}" class="card-container ${card.completed}"><h2 class="title-of-card" content-editable>${card.title}</h2>
           <button class="card-btn delete-button"></button>
-          <p class="body-of-card">${card.task}</p>
+          <p class="body-of-card" contenteditable>${card.task}</p>
           <button class="card-btn upvote"></button> 
           <button class="card-btn downvote"></button> 
           <p class="quality">quality:<span class="qualityVariable">${card.qualitiesArray[card.qualityIndex]}</span></p>
@@ -83,8 +82,14 @@ function updateCardTextOnEnter(e) {
 }
 
 function updateCardText(e) {
-
-}
+  var card = JSON.parse(localStorage.getItem(e.target.parentNode.id));
+  if ($(e.target).hasClass('title-of-card')) {
+    card.title = ($(e.target).closest('.title-of-card').text());
+  } else if ($(e.target).hasClass('body-of-card')) {
+    card.task = ($(e.target).closest('.body-of-card').text());
+  }
+  localStoreCard(card);
+};
 
 /////////COMPLETE TASK FUNCTION 
 
