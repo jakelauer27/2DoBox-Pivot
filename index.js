@@ -21,6 +21,8 @@ function clickSave(event) {
     $( ".bottom-box" ).prepend(makeCardHTML(card)); 
     localStoreCard(card);
     $('form')[0].reset();
+    $('.character-count-task').text(0);
+    $('.character-count-title').text(0);
 };
 
 function CreateCard(title, task) {
@@ -127,7 +129,8 @@ function showAllCompleted() {
 }
 
 function showMoreTodos() {
-  for(i = 0; i < localStorage.length; i++) {
+  if(localStorage.length <= 10) return;
+  for(i = 0; i < (localStorage.length - 10); i++) {
     var key = localStorage.key(i);
     var cardData = JSON.parse(localStorage.getItem(key));
     if (!cardData.completed) $( ".bottom-box" ).prepend(makeCardHTML(cardData));
