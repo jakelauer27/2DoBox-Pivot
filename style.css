@@ -213,7 +213,6 @@ hr {
   color: rgb(218, 229, 238)
 }
 
-
 .filter-btn, .show-all-btn {
   width: 10%;
   height: 30px;
@@ -229,17 +228,106 @@ hr {
   justify-content: space-between;
   width: 45%;
   display: flex;
+  align-items: center;
+}
 
 .show-all-btn {
   background-color: rgb(218, 229, 238);
   color: #6d6e71;
 }
 
-@media(max-width: 640px){
+@media(max-width: 1130px){
+  .filter-div {
+    margin-bottom: 3%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 20px;
+    grid-template-areas: 
+    "filterp filterp none low normal"
+    ". . high critical show";
+  }
+
+  .filter-p {
+    grid-area: filterp;
+  }
+  .filter-none {
+    grid-area: none;
+  }
+  .filter-low {
+    grid-area: low;
+  }
+  .filter-normal {
+    grid-area: normal;
+  }
+  .filter-high {
+    grid-area: high;
+  }
+  .filter-critical {
+    grid-area: critical;
+  }
+  .show-all-btn {
+    grid-area: show;
+  }
+  .filter-btn {
+    width: 100%;
+  }
+}
+
+@media(max-width: 950px){
   form,
+  .filter-div,
+  .bottom-input-container,
+  .search-input-container,  
+  .card-container {
+    width: 55%;
+  }
+
+  .filter-btn {
+    width: 100%;
+  }
+
+  .filter-div {
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+  }
+}
+
+@media(max-width: 750px){
+  form,
+  .filter-div,
+  .bottom-input-container,
+  .search-input-container,  
+  .card-container {
+      width: 65%;
+  }
+
+  .filter-div {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media(max-width: 620px) {
+  form,
+  .filter-div,
+  .bottom-input-container,
   .search-input-container,  
   .card-container {
       width: 85%;
-    }
-}
+  }
 
+  .filter-div {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: 
+  "filterp filterp filterp"
+  "none low normal"
+  "high critical show"
+  }
+
+  .importance {
+    font-size: .9rem;
+  }
+
+  .completed-button {
+    top: 12px;
+  }
+}
